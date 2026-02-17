@@ -1,0 +1,42 @@
+---
+title: "Challenge 1"
+author: "Faith Hardie"
+format: html
+editor: visual
+---
+
+## Week 2 work
+
+```{r}
+my_name <- "Faith Hardie"
+
+my_name
+```
+
+## 
+
+```{r}
+my_age = 20
+my_age
+```
+
+```{r}
+library(here)
+library(janitor)
+library(tidyverse)
+```
+
+```{r}
+sdr_data <- read_csv(here("data/SDR-2023-Data.csv"))
+sdr_data <- clean_names(sdr_data)
+```
+
+ 
+
+```{r}
+column_names <- as.list(colnames(sdr_data)) 
+```
+
+```{r}
+dim(sdr_data)
+```
