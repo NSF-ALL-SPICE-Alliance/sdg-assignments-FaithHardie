@@ -78,7 +78,7 @@ This may cause you to wonder: *why learn to code when all of these tools are alr
 
 Use the data visualization tools on one of these platforms([Small Island Developing States Data Platform](https://sids.data.undp.org/), [United States Sustainable Development Report](https://us-states.sdgindex.org/map), [2023 Sustainable Development Report](https://dashboards.sdgindex.org/map)) to create 2 data visualizations. For each visualization, write 4 sentences describing what you see.
 
-Download the visualization and descriptions into a pdf and email to connor.flynn@chaminade.edu and victoria.delacruz@student.chaminade.edu 
+Download the visualization and descriptions into a pdf and email to connor.flynn@chaminade.edu 
 
 - This is the *only* challenge that will be submitted via email, the rest will be through github classroom
 

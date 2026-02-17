@@ -2,13 +2,14 @@
 output: html_document
 ---
 
+## [Click Here to Apply!](https://webforms.chaminade.edu/dataskills_short_courses/)
+
+ 
+`r vembedr::embed_url("https://www.youtube.com/watch?v=aCt1k2EUdOs")`
 
 
 
-
-<img src="`r here::here('logos/SDG-Analytics-in-R-Flyer-Fall-24.png')`" />
-
-
+<img src="`r here::here('logos/Spring 26 SDG Analytics in R Flyer.pdf.png')`" />
 
 
 
