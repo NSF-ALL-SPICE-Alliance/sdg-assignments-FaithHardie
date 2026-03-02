@@ -1,0 +1,96 @@
+---
+title: "week2.2"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+library(vembedr)
+```
+
+```{r}
+sdr_data <- read_csv(here("data/SDR-2023-Data.csv"))
+```
+
+```{r}
+sdr_data <- sdr_data %>% 
+  clean_names()
+
+```
+
+```{r}
+ggplot(data = sdr_data, aes(x= goal_3_score, y = goal_4_score)) +
+  geom_point()
+```
+
+```{r}
+ggplot(data = sdr_data, aes(x= goal_3_score, y = goal_4_score, color = regions_used_for_the_sdr)) +
+  geom_point()
+```
+
+```{r}
+ggplot(data = sdr_data, aes(x= goal_3_score, y = goal_4_score, color = goal_5_score)) +
+  geom_point()
+```
+
+```{r}
+##Challenge 1
+ggplot(data = sdr_data, aes(x= goal_3_score, y = goal_6_score, color = goal_5_score)) +
+  geom_point()
+```
+
+Goal 3 and 6 have a strong positive correlation. Goal 5 also has a strong positive correlation, however less so. (Goal 5 gender equality, goal 6 sustainable access to drinking water, goal 3 good health and well-being.)
+
+```{r}
+ggplot(sdr_data, aes(x= goal_3_score, y = country)) +
+  geom_bar(stat = "identity")
+```
+
+```{r}
+lac_sdr_data <- sdr_data %>% 
+  filter(regions_used_for_the_sdr == "LAC")
+```
+
+```{r}
+ggplot(lac_sdr_data, aes(x= goal_3_score, y = country)) +
+  geom_bar(stat = "identity") 
+
+```
+
+```{r}
+ggplot(sdr_data, aes(x= goal_3_score, y = country)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~regions_used_for_the_sdr, scales = "free_y") + 
+  theme(axis.text.y = element_text(size = 4))
+```
+
+```{r}
+##challenge 2 bar chart
+c<- sdr_data %>% 
+  filter(regions_used_for_the_sdr == "MENA")
+
+ggplot(mena_sdr_data, aes(x= goal_5_score, y = country)) +
+  geom_bar(stat = "identity") 
+```
+
+```{r}
+ggplot(sdr_data, aes(x = goal_4_score)) +
+  geom_histogram()
+```
+
+```{r}
+ggplot(sdr_data, aes(x = goal_4_score, fill=regions_used_for_the_sdr)) + 
+  geom_histogram(bins=33, color="black")
+```
+
+```{r}
+##challenge 3
+
+ggplot(sdr_data, aes(x = goal_5_score, fill=regions_used_for_the_sdr)) + 
+  geom_histogram(bins=33, color="black")
+```
+
+Countries in the OECD (European countries, parts of America, etc) had higher SDG score for SDG 5 (gender quality.) There seems to be no / limited correlation between count (population size) and score. Sub-Saharan and MENA regions peform the lowest in SDG 5.
