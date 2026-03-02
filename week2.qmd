@@ -1,0 +1,101 @@
+---
+title: "Challenge 1"
+author: "Faith Hardie"
+format: html
+editor: visual
+---
+
+## Week 2 work
+
+```{r}
+my_name <- "Faith Hardie"
+
+my_name
+```
+
+## 
+
+```{r}
+my_age = 20
+my_age
+```
+
+```{r}
+library(here)
+library(janitor)
+library(tidyverse)
+```
+
+```{r}
+sdr_data <- read_csv(here("data/SDR-2023-Data.csv"))
+sdr_data <- clean_names(sdr_data)
+```
+
+ 
+
+```{r}
+column_names <- as.list(colnames(sdr_data)) 
+```
+
+```{r}
+dim(sdr_data) 
+```
+
+```{r}
+library(naniar)
+```
+
+```{r}
+sdr_data %>% 
+  miss_var_summary() %>% 
+  arrange(desc(pct_miss))
+```
+
+```{r}
+table(sdr_data$goal_7_dash)
+```
+
+```{r}
+table(sdr_data$goal_7_dash, sdr_data$regions_used_for_the_sdr)
+```
+
+```{r}
+sdr_data %>% 
+  select(goal_3_score, goal_4_score)
+```
+
+```{r}
+sdg_scores <- sdr_data %>% 
+  select(goal_5_score, goal_6_score)
+
+sdg_scores
+```
+
+```{r}
+sdr_data %>% 
+  filter(regions_used_for_the_sdr == "Oceania")
+```
+
+```{r}
+new_region <- sdr_data %>% 
+  filter(regions_used_for_the_sdr == "Africa")
+
+new_region
+```
+
+```{r}
+oceania_data <- sdr_data %>% 
+  filter(regions_used_for_the_sdr == "Oceania")
+```
+
+```{r}
+sdr_data %>% 
+  group_by(regions_used_for_the_sdr) %>% 
+  summarise(mean_goal_7_score_by_region = mean(population_using_at_least_basic_drinking_water_services_percent))
+```
+
+```{r}
+sdr_data %>% 
+  select(country, population_with_access_to_clean_fuels_and_technology_for_cooking_percent, co2_emissions_from_fuel_combustion_per_total_electricity_output_mt_co2_t_wh, population_with_access_to_electricity_percent, renewable_energy_share_in_total_final_energy_consumption_percent) %>%
+  pivot_longer(cols = -country, names_to = "Indicator") 
+```
