@@ -1,0 +1,106 @@
+---
+title: "week3"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+library(plotly)
+library(rnaturalearth)
+library(leaflet)
+library(sf)
+library(vembedr)
+```
+
+```{r}
+sdr_data <- read_csv(here("data/SDR-2023-Data.csv"))
+```
+
+```{r}
+sdr_data <- sdr_data %>% 
+  clean_names()
+```
+
+```{r}
+ggplot(sdr_data, aes(x = goal_4_score, fill=regions_used_for_the_sdr)) +
+  geom_histogram()
+```
+
+```{r}
+ggplot(sdr_data, aes(x = goal_4_score, fill=regions_used_for_the_sdr)) +
+  geom_histogram() +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  labs(title = "Distributions of SDG 4 Scores",
+       x = "SDG 4 Score",
+       y = "Number of Countries",
+       fill = "Region")
+```
+
+```{r}
+ggplot(data = sdr_data, aes(x= goal_3_score, y = goal_4_score, color = regions_used_for_the_sdr)) +
+  geom_point()
+```
+
+```{r}
+##my plot
+challenge <- ggplot(data = sdr_data, aes(x = goal_3_score, y = goal_4_score, color = regions_used_for_the_sdr)) +
+  geom_point() +
+  theme_minimal() +
+  scale_color_viridis_d() +
+  labs(
+    title = "SDR Goal 3 vs Goal 4 Scores by Region",
+    x = "Goal 3 Score",
+    y = "Goal 4 Score",
+    color = "Region"
+  )
+
+ggplotly(challenge)
+```
+
+```{r}
+world <- ne_countries(scale = "medium", returnclass = "sf") 
+```
+
+```{r}
+world <- world %>% 
+  select(name_long, iso_a3, geometry)
+
+```
+
+```{r}
+# Rename a column in a data frame or matrix
+colnames(sdr_data)[which(colnames(sdr_data) == "country_code_iso3")] <- "iso_a3"
+```
+
+```{r}
+sdr_data_world_joined <- left_join(world, sdr_data, by = "iso_a3")
+```
+
+```{r}
+class(sdr_data_world_joined)
+```
+
+```{r}
+sdr_data_world_joined <- st_transform(sdr_data_world_joined, "+proj=longlat +datum=WGS84")
+```
+
+```{r}
+challenge2 <- paste(
+    "Country: ", sdr_data_world_joined$country,"<br/>", 
+    "Goal 3 Score: ", round(sdr_data_world_joined$goal_3_score, 2), 
+    sep="") 
+
+leaflet(sdr_data_world_joined) %>% 
+  addTiles()  %>% 
+  setView( lat=10, lng=0 , zoom=2) %>%
+  addPolygons(stroke = FALSE, fillOpacity = 0.5, smoothFactor = 0.5, color = ~colorQuantile("YlOrRd", goal_3_score)(goal_3_score), label = challenge2)
+
+```
+
+```{r}
+
+```
