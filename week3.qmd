@@ -13,6 +13,8 @@ library(rnaturalearth)
 library(leaflet)
 library(sf)
 library(vembedr)
+library(ggpubr)
+library(ggcorrplot)
 ```
 
 ```{r}
@@ -103,4 +105,85 @@ leaflet(sdr_data_world_joined) %>%
 
 ```{r}
 
+install.packages("gg_pubr")
 ```
+
+### Stats
+
+```{r}
+ggplot(sdr_data, aes(x = goal_7_score, 
+                     y = goal_1_score)) +
+  geom_point() +
+  theme_minimal() 
+```
+
+```{r}
+ggplot(sdr_data, aes(x = goal_7_score, 
+                     y = goal_1_score)) +
+  geom_point() +
+  geom_smooth() +
+  theme_minimal() 
+```
+
+```{r}
+ggplot(sdr_data, aes(x = goal_7_score, 
+                     y = goal_1_score)) +
+  geom_point() +
+  geom_smooth() +
+  stat_cor() +
+  theme_minimal() 
+```
+
+```{r}
+sdr_scores <- sdr_data %>%
+  select(
+    goal_1_score, goal_2_score, goal_3_score, goal_4_score, goal_5_score,
+    goal_6_score, goal_7_score, goal_8_score, goal_9_score, goal_10_score,
+    goal_11_score, goal_12_score, goal_13_score, goal_14_score, goal_15_score,
+    goal_16_score, goal_17_score
+  )
+```
+
+```{r}
+sdr_scores_matrix <- as.matrix(sdr_scores)
+```
+
+```{r}
+cor <- cor(sdr_scores_matrix, use = "complete.obs")
+
+```
+
+```{r}
+ggcorrplot(cor, method = "circle", type = "lower", lab = TRUE, lab_size = 2) +
+  theme(axis.text.y = element_text(size = 8),
+  axis.text.x = element_text(size = 8))
+```
+
+```{r}
+ggplot(sdr_data, aes(x = goal_12_score, 
+                     y = goal_9_score)) +
+  geom_point() +
+  geom_smooth() +
+  stat_cor() +
+  theme_minimal() 
+```
+
+```{r}
+##challenge
+plot2 <- ggplot(sdr_data, aes(x = goal_3_score, 
+                     y = goal_8_score,
+                     label = country)) +
+  geom_point() +
+  geom_smooth() +
+  stat_cor() +
+  theme_minimal() +
+  labs(
+    title = "SDG Goal 3 vs Goal 8 Scores",
+    x = "Goal 3 Score (Good Health & Well-Being)",
+    y = "Goal 8 Score (Decent Work & Economic Growth)"
+  )
+
+ggplotly(plot2)
+```
+
+Countries succeeding in sdg 3 have higher success in goal 8. Investments in health and well being could correlate to higher workforce and economic strength, which seems like a fairly apparent relationship, if a country is taking care of it's people, they can work harder and thrive, and, if a country is thriving, they can better take care and invest in the health of their people. However, there are countries that do not follow this, and the correlation is not perfect. When hovering over these outliers, like Afghanistan, Eswatini, etc, Their goal 3 and Goal 8 score are actually still within 10 points of each other. They still follow the trend of the other countries, but just have lower overall scores, making goal 3 and goal 8 good indicators of each other. It would be interesting to perform a bayesian model on goal 3 and 8 to take a closer look at any hidden trends between countries.
