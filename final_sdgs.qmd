@@ -8,17 +8,45 @@ editor: visual
 
 For my final project for the SDG analytics in R, I chose to focus on the relationship between SDG 9 and 10. Recently for a capstone essay in my healthcare analytics course, I briefly studied the relationship between stronger infrastructure and equality in both less developed countries (LDCs) and more developed countries (MDCs).
 
-Within this project I seek to understand the relationship between goal 9 and 10 using data visualization, linear regression, and the SDR 2023 dataset. I seek to recognize the countries with strong and weak SDG 9 progress, and correlate the two goals, to understand my question, "What is the relationship between SDG 9 and SDG 10 in a global context?" and my secondary question, "How does this relationship differ in LDCs and MDCs?
+Within this project I seek to understand the relationship between goal 9 and 10 using data visualization, logistic regression, and the SDR 2023 dataset. I seek to recognize the countries with strong and weak SDG 9 progress, and correlate the two goals, to understand my question, "What is the relationship between SDG 9 and SDG 10 in a global context?" and my secondary question, "How does this relationship differ in LDCs and MDCs?
 
-This research will consist of 4 main sections, first, understanding my data , cleaning it, and basic visualization to set a basis for my analysis. Secondly, I will create 3-4 data visualizations that give insights to goal 9 and 10 progress in different countries . Third, I will create a linear regression model to determine correlation between goal 9 and 10 in different countries, and finally I will conclude with my analysis of the results and closing thoughts, limitations and future works.
+This research will consist of 4 main sections, first, understanding my data , cleaning it, and basic visualization to set a basis for my analysis. Secondly, I will create 3-4 data visualizations that give insights to goal 9 and 10 progress in different countries . Third, I will create a logistic regression model to determine correlation between goal 9 and 10 in different countries, and finally I will conclude with my analysis of the results and closing thoughts, limitations and future works.
 
-## Libraries and exploratory vis
+## Section 1: Libraries and exploratory vis
 
 ```{r}
 #| echo: false
-#| #libraries 
-#| 
+#| #libraries & loading in data
+library(tidyverse)
+library(here)
+library(janitor)
+library(plotly)
+library(rnaturalearth)
+library(leaflet)
+library(sf)
+library(vembedr)
+library(ggpubr)
+library(ggcorrplot)
+
+sdr_data <- read_csv(here("data/SDR-2023-Data.csv"))
 ```
+
+```{r}
+## data cleaning + basic exploration
+sdr_data <- sdr_data %>% 
+  clean_names()
+
+table(sdr_data$goal_7_dash, sdr_data$regions_used_for_the_sdr)
+
+```
+
+```{r}
+#exploration
+sdr_data %>% 
+  select(goal_9_score, goal_10_score)
+```
+
+## Section 2: Data Visualization
 
 ```{r}
 
