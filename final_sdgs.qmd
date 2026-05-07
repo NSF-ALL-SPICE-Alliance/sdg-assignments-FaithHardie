@@ -49,5 +49,9 @@ sdr_data %>%
 ## Section 2: Data Visualization
 
 ```{r}
-
+###First vis
+ggplot(data = sdr_data, aes(x= goal_9_score, y = goal_10_score, color = regions_used_for_the_sdr)) +
+  geom_point()
 ```
+
+From just this basic visualization there seems to be no correlation between goal 9 and 10, and that's fine! I'm not looking for breakthrough correlation, simply looking at what the data says about my answer. However, it's important to continue fully exploring, because one scatterplot is a good introduction, but cannot tell the full story. However, what this scatterplot can tell me is that Sub-Saharan Africa regions have a lower goal 9 score, and a moderate range in their goal 10 score. OECD regions have both a high goal 9 and goal 10 score. This doesn't appear to be a huge correlation though, it just tells us what countries are doing better or worst at goal 9 and 10, however there could be a correlation between regions with a high count of MDCs or LDCs, which tells me it's worth investigating. So, for my next visualization I would have to define regions that are MDC or LDC.
