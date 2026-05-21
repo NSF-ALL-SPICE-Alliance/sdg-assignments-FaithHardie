@@ -67,3 +67,7 @@ ggplot(data = sdr_data, aes(x= goal_9_score, y = goal_1_score, color = regions_u
 ggplot(data = sdr_data, aes(x= goal_10_score, y = goal_1_score, color = regions_used_for_the_sdr)) +
   geom_point()
 ```
+
+Based on these 2 scatterplots,it seems goal 9 may have a higher positive correlation to country classification than goal 10. This suggests that goal 9 and 10 may not have a strong correlation, but may have a different relationships in different regions. Thus, it's time to create my logistic regression models.
+
+## Section 3: Modeling
