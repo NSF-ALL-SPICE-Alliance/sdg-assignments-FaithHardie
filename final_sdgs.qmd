@@ -71,3 +71,9 @@ ggplot(data = sdr_data, aes(x= goal_10_score, y = goal_1_score, color = regions_
 Based on these 2 scatterplots,it seems goal 9 may have a higher positive correlation to country classification than goal 10. This suggests that goal 9 and 10 may not have a strong correlation, but may have a different relationships in different regions. Thus, it's time to create my logistic regression models.
 
 ## Section 3: Modeling
+
+In Section 2 the scatterplots hinted that SDG 9 and SDG 10 don't move together very tightly, but that SDG 9 seems more tied to a country's development level than SDG 10 does. A linear regression lets me put numbers to those impressions. Because both `goal_9_score` and `goal_10_score` are continuous (0–100), I can model one directly as a function of the other without collapsing either into a yes/no variable.
+
+### Preparing the modeling data
+
+I build one tidy frame with just the columns I need, define MDC vs. LDC using SDG 1 (No Poverty) as a proxy, and drop rows with missing scores. A high SDG 1 score means a country has largely ended extreme poverty, so I treat that as "more developed."
